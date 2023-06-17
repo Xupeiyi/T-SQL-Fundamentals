@@ -1,5 +1,11 @@
 # Chapter 5 Table Expressions 
 A table expression is an expression that conceptually returns a table result and as such can be nested as an operand of another table expression.
+  
+T-SQL supports 4 types of named table expressions: 
+- derived tables
+- common table expressions (CTEs)
+- views
+inline table-valued functions (inline TVFs)
 
 Because it's supposed to represent a table, there are three requirements for an inner query in a table-expression definition:
 - all relation attributes must have names
@@ -71,3 +77,23 @@ Generally a good practice to turn it on, but can make things hard to change.
 
 3. CHECK OPTION  
 The user can insert new rows to tables via views. CHECK OPTION prevent modifications that conflict with the view's definition (i.e., filter).
+
+## Inline table-valued functions
+Inline TVFs an be thought of as parameterized views.  
+There's also a type of TVF called multi-statement TVF, which is not considerd a table expression because it's not based on a query.
+
+### APPLY
+APLLY operates on 2 input tables ("left" and "right"). Unlike JOIN, which gives no order to left and right, the left side is evaluated first, and the right side is evaluated per row from the left.   
+```
+SELECT C.custid, A.orderid, A.orderdate
+FROM Sales.Customers AS C
+CROSS APPLY
+(SELECT TOP(3) orderid, empid, orderdate, requireddate
+FROM Sales.Order AS O
+WHERE O.custid = C.custid
+ORDER BY orderdate DESC, orderid DESC) AS A;
+
+```
+CROSS APPLY does not return the corresponding left row if right returns an empty set, but OUTER APPLY does.
+
+
