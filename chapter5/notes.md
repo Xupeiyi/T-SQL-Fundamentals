@@ -58,3 +58,16 @@ WHERE parent_id NOT IN (
 )
 ```
 ## Views
+Explicitly list the column names you need in the definition of the view.  
+Like mentioned above, ORDER BY is not allowed in the definition of a view, unless TOP or OFFSET-FETCH is also specified. Even one managed to use ORDER BY in the definition, or created a seemingly ordered view, the order is not guaranteed.
+
+### View Options
+1. ENCRYPTION    
+The ENCRYPTION option will return the user a NULL or an error when the user is trying to get the DDL of the view.  
+
+2. SCHEMABINDING   
+The object or column referenced by the view cannot be dropped or altered.  
+Generally a good practice to turn it on, but can make things hard to change.  
+
+3. CHECK OPTION  
+The user can insert new rows to tables via views. CHECK OPTION prevent modifications that conflict with the view's definition (i.e., filter).
