@@ -27,7 +27,7 @@ Window functions are logically evaluated as part of the SELECT list, before the 
 
 ### Offset window functions
 Return an element from a row that is at a certain offset from the current row, or at the beginning or end of a window frame.
-
+- LAG/LEAD
 
 
 
