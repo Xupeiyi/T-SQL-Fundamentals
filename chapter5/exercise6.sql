@@ -20,4 +20,5 @@ CROSS APPLY
 Production.TopProducts(suppliers.supplierid, 2) AS products;
 
 DROP VIEW IF EXISTS Sales.VEmpOrders;
+
 DROP FUNCTION IF EXISTS Production.TopProducts;

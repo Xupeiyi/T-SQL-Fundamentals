@@ -5,7 +5,7 @@ T-SQL supports 4 types of named table expressions:
 - derived tables
 - common table expressions (CTEs)
 - views
-inline table-valued functions (inline TVFs)
+- inline table-valued functions (inline TVFs)
 
 Because it's supposed to represent a table, there are three requirements for an inner query in a table-expression definition:
 - all relation attributes must have names
@@ -94,6 +94,7 @@ WHERE O.custid = C.custid
 ORDER BY orderdate DESC, orderid DESC) AS A;
 
 ```
+
 CROSS APPLY does not return the corresponding left row if right returns an empty set, but OUTER APPLY does.
 
 
