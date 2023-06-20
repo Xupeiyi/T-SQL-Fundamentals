@@ -28,6 +28,16 @@ Window functions are logically evaluated as part of the SELECT list, before the 
 ### Offset window functions
 Return an element from a row that is at a certain offset from the current row, or at the beginning or end of a window frame.
 - LAG/LEAD
+- FIRST_VALUE/LAST_VALUE
+RESPECT/IGNORE NULLS: keep or ignore NULLs until a result is found
 
+### Aggregate window functions
+- SUM without a window-frame clause: same value for all rows in a window
+- SUM with a window-frame clause: running and moving aggregates, YTD and MTD calculations
 
-
+### The window clause
+Place
+```
+WINDOW W AS (PARTITION BY ..., ORDER BY, ROWS BETWEEN ...)
+```
+between HAVING and ORDER BY
