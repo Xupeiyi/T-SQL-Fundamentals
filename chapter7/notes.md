@@ -40,4 +40,11 @@ Place
 ```
 WINDOW W AS (PARTITION BY ..., ORDER BY, ROWS BETWEEN ...)
 ```
-between HAVING and ORDER BY
+between HAVING and ORDER BY.
+The WINDOW clause can name part of the window 
+
+## Pivoting Table
+Every pivoting request involves 3 logical processing phases:  
+1. A grouping phase with an associated grouping or on rows elements
+2. A spreading phase with an associated spreading or on cols element
+3. An aggregation phase with an associated aggregation element and aggregate function
