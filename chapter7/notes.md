@@ -93,3 +93,6 @@ SELECT empid, custid, qty
 FROM dbo.EmpCustOrders
     CROSS APPLY (VALUES ('A', A), ('B', B), ('C', C), ('D', D)) AS C(custid, qty)
 ```
+3. Discard rows with a NULL in the qty column
+
+### Unpivoting using the UNPIVOT operator
