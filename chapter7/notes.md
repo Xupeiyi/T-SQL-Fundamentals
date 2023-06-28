@@ -101,3 +101,60 @@ SELECT empid, custid, qty
 FROM dbo.EmpCustOrders
     UNPIVOT (qty FOR custid in (A, B, C, D)) AS U;
 ```
+
+## Grouping sets
+### The GROUPING SETS subclause
+```
+SELECT empid, custid, SUM(qty) as sumqty
+FROM dbo.Orders
+GROUP BY
+    GROUPING SETS
+    (
+        (empid, custid),
+        (empid),
+        (custid),
+        ()
+    )
+```
+is equivalent to
+```
+SELECT empid, custid, SUM(qty) as sumqty
+FROM dbo.Orders
+GROUP BY empid, custid
+
+UNION ALL
+
+SELECT empid, custid, SUM(qty) as sumqty
+FROM dbo.Orders
+GROUP BY empid
+
+UNION ALL
+
+...
+```
+
+### The CUBE subclause
+```
+CUBE (a, b, c)
+```
+is equivalent to 
+```
+GROUPING SETS((a, b, c), (a, b), (a, c), (b, c), (a), (b), (c), ())
+```
+
+### The ROLLUP subclause
+```
+ROLLUP(a, b, c)
+```
+is equivalent to 
+```
+GROUPINIG SETS((a, b, c), (a, b), (a), ())
+```
+It assumes a > b > c. For example, a = year, b = month, c = day
+
+### The GROUPING and GROUPING_ID functions
+When a field is NULL in one row, how do you know whether it's because that column did not participate in the current grouping set, or it's because that field has been NULL from the beginning?
+
+GROUPING(column) returns 0 if column is part of the grouping set or 1 if the column is an aggregate element.
+
+GROUPING_ID(col1, col2, col3, ...) returns an integer bitmap for each grouping set
