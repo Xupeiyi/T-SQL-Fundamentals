@@ -96,3 +96,8 @@ FROM dbo.EmpCustOrders
 3. Discard rows with a NULL in the qty column
 
 ### Unpivoting using the UNPIVOT operator
+```
+SELECT empid, custid, qty
+FROM dbo.EmpCustOrders
+    UNPIVOT (qty FOR custid in (A, B, C, D)) AS U;
+```
