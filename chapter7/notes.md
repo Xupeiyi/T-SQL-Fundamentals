@@ -158,3 +158,8 @@ When a field is NULL in one row, how do you know whether it's because that colum
 GROUPING(column) returns 0 if column is part of the grouping set or 1 if the column is an aggregate element.
 
 GROUPING_ID(col1, col2, col3, ...) returns an integer bitmap for each grouping set
+
+## Time series
+
+### The DATE_BUCKET function
+used to create time buckets and resample data.
