@@ -50,7 +50,9 @@ WITH parent(child_id, parent_id, num_level) AS (
     SELECT child_id, parent_id, 1
     FROM child
     WHERE parent_id IS NOT NULL
+
     UNION ALL
+    
     SELECT c.child_id, p.parent_id, p.num_level + 1
     FROM child AS c
     JOIN parent p ON c.parent_id = p.child_id
