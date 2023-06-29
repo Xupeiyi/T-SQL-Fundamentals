@@ -162,4 +162,8 @@ GROUPING_ID(col1, col2, col3, ...) returns an integer bitmap for each grouping s
 ## Time series
 
 ### The DATE_BUCKET function
-used to create time buckets and resample data.
+used to create time buckets and resample data.  
+```
+DATE_BUCKET(datepart, bucketwidth, ts[, origin])
+```
+returns the start of the time bucket
