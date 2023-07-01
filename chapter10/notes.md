@@ -89,4 +89,8 @@ Need a shared lock to read, and need to hold the lock until the end of the trans
 Can also prevent **lost update**. In lower isolations, both transactions can update the resource, so the first update will be overwritten by the second.  
 Can lead to a deadlock.  
 
-### Serializable
+### SERIALIZABLE
+Under REAPEATABLE READ, the transaction locks only the resources that the query found the first time it ran. Therefore, a second read in the transaction might return new rows. This is called **phantom reads**.
+Use SERIALIZABLE to prevent phantom reads.  
+SERIALIZABLE causes a reader to lock the whole range of keys that qualify for the query's filter, which blocks attempts made by other transactions to add rows that qualify for the reader's query filter.
+
