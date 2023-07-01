@@ -1,6 +1,7 @@
 # Chapter 10 Transactions and Concurrency
 
-## Transactions
+## 1. Transactions
+A transaction is a unit of work. Might query data, modify data, and change the data definition.  
 example:
 ```
 BEGIN TRAN
@@ -16,7 +17,7 @@ Four properties of transactions: ACID
 - Isolation. The user controls what consistency means through isolation levels.SQL Server supports 2 models: pure locking & row versioning.
 - Durability. Depends on the recovery architecture. Before SQL Server 2019, traditional architecture is used. In SQL Server 2019 or later, new architecture feature called ADR is supported.
 
-## Locks and blocking
+## 2.Locks and blocking
 ### Lock modes and compatibility
 Two lock modes: Exclusive & Shared
 |Request Mode|Granted Exclusive|Granted Shared|
@@ -46,3 +47,46 @@ To get lock information, query the dynamic management view sys.dm_tran_locks in 
 Use session_id to get a bianry value holding a handle to the most recent SQL batch run by the connection. Query sys.dm_exec_connections
 3. Get the batch of SQL code represented by the handle
 Query sys.dm_exec_connections
+
+Use KILL <session_id> to terminate a blocker. It will cause a rollback.  
+Use LOCK_TIMEOUT to restrict the amount of time a session waits for a lock.
+
+## 3.Isolation levels
+Isolation levels determine the level of consistency.
+The user cannot determine how the writer uses exclusive locks, but can control the behavior of the reader either on session level or query level.
+
+```
+SET TRANSACTION ISOLATION LEVEL <isolation name>
+```
+
+```
+SELECT ... FROM <table> WITH <isolation name>
+```
+
+4 isolation levels that based on the pure locking model:
+- READ UNCOMMITTED
+- READ COMMITTED (default)
+- REPEATABLE READ
+- SERIALIZABLE
+
+2 isolation levels that based on locking + row versioning:
+- SNAPSHOT
+- READ COMMITTED SNAPSHOT (default in Azure SQL Database)
+
+### READ UNCOMMITTED
+lowest isolation level  
+The reader doesn't ask for a shared lock - leading to reading uncommited changes (dirty reads)
+
+For example, in a transaction, connection 1 sets A from 19 to 20, then rolls back at some point. Connection 2 might read the uncommitted data A = 20.
+
+### READ COMMITTED
+prevents dirty reads  
+Require the reader to obtain a shared lock  
+Can lead to **unrepeatable read**: Another transaction might change a resource in between 2 reads in the current transaction, because no lock is held on that resource.
+
+### REPEATABLE READ
+Need a shared lock to read, and need to hold the lock until the end of the transaction.
+Can also prevent **lost update**. In lower isolations, both transactions can update the resource, so the first update will be overwritten by the second.  
+Can lead to a deadlock.  
+
+### Serializable
