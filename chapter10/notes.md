@@ -94,3 +94,8 @@ Under REAPEATABLE READ, the transaction locks only the resources that the query 
 Use SERIALIZABLE to prevent phantom reads.  
 SERIALIZABLE causes a reader to lock the whole range of keys that qualify for the query's filter, which blocks attempts made by other transactions to add rows that qualify for the reader's query filter.
 
+### SNAPSHOT
+Guaranteed to get committed reads, repeatable reads, and no phantom reads.   
+Relies on row versioning instead of shared locks.
+
+
