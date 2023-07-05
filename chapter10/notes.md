@@ -95,7 +95,15 @@ Use SERIALIZABLE to prevent phantom reads.
 SERIALIZABLE causes a reader to lock the whole range of keys that qualify for the query's filter, which blocks attempts made by other transactions to add rows that qualify for the reader's query filter.
 
 ### SNAPSHOT
-Guaranteed to get committed reads, repeatable reads, and no phantom reads.   
-Relies on row versioning instead of shared locks.
+Guaranteed to get committed reads, repeatable reads, and no phantom reads. No blockings.  
+Relies on row versioning instead of shared locks.  
+Row versioning incurs a performance penalty, mainly when updating and deleting data, regardless of whether or not the modification is executed from a session running under one of the row-versioning-based isolation levels.   
+Enables on a database level.
+Can detect update conflicts, while REPEATABLE READS and SERIALIZABLE don't.
+
+
+
+
+
 
 
