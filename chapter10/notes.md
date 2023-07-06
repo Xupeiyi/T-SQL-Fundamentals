@@ -101,9 +101,20 @@ Row versioning incurs a performance penalty, mainly when updating and deleting d
 Enables on a database level.
 Can detect update conflicts, while REPEATABLE READS and SERIALIZABLE don't.
 
+Can lead to a special type of error called "update conflict". This would happen when two transactions tried to update the same resource at the same time. Can be caught by error handlers.
 
+### READ COMMITTED SNAPSHOT
+Provide statement-level consistent data, not transactional-level. Does not detect update conflicts.
 
-
+### Summary
+|Isolation level |uncommitted reads?| nonrepeatable reads? | lost updates?| phantom reads?|Detects update conflicts?|Uses row versioning?|
+|----|--|--|--|--|--|--|
+|READ UNCOMMITTED|T|T|T|T|F|F|
+|READ COMMITTED|F|T|T|T|F|F|
+|READ COMMITTED SNAPSHOT|F|T|T|T|F|T
+|REPEATABLE READ|F|F|F|T|F|F|
+|SERIALIZABLE|F|F|F|F|F|F|
+|SNAPSHOT|F|F|F|F|T|T|
 
 
 
