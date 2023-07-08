@@ -117,4 +117,6 @@ Provide statement-level consistent data, not transactional-level. Does not detec
 |SNAPSHOT|F|F|F|F|T|T|
 
 
-
+## Deadlocks
+A deadlock is a situation in which two or more sessions block each other. 
+To eliminate deadlocks, SQL Server chooses to terminate the transaction that did the least work  based on the activity written to the transaction log.
