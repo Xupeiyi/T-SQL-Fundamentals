@@ -119,4 +119,13 @@ Provide statement-level consistent data, not transactional-level. Does not detec
 
 ## Deadlocks
 A deadlock is a situation in which two or more sessions block each other. 
-To eliminate deadlocks, SQL Server chooses to terminate the transaction that did the least work  based on the activity written to the transaction log.
+
+To eliminate deadlocks, SQL Server chooses to terminate the transaction that did the least work based on the activity written to the transaction log.
+
+To avoid deadlocks, the transactions should be as short as possible. Do not use transactions that requires user input to finish.
+
+Swap the order of resource access in a transaction to prevent a *deadly embrace* deadlock, if that makes no logical difference.
+
+Deadlocks often happen when there is no real logical conflict, because of a lack of good indexing to support query filters. If you don’t have indexes defined in the tables to support the filter, SQL Server has to scan (and lock) all rows in the table, leading to a deadlock. In short, good index design can help mitigate the occurrences of deadlocks that have no real logical conflict.
+
+Change the isolation level to prevent deadlocks.
